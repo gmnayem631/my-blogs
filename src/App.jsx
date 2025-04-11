@@ -11,16 +11,21 @@ function App() {
     setBookmarked([...bookmarked, blog]);
   };
 
-  const handleMarkAsRead = (time) => {
+  const handleMarkAsRead = (time, id) => {
     const newTime = readingCount + time;
     setReadingCount(newTime);
+    // console.log(id);
+    handleRemoveFromBookmark(id);
   };
-  console.log(readingCount);
+
+  const handleRemoveFromBookmark = (id) => {
+    const remainingBookmark = bookmarked.filter((mark) => mark.id !== id);
+    setBookmarked(remainingBookmark);
+  };
 
   return (
     <>
       <Navbar></Navbar>
-      {/* <Blogs></Blogs> */}
 
       <div className="main-container flex text-center">
         <div className="left-container w-[70%]">
@@ -33,7 +38,12 @@ function App() {
           <h1>Reading Time: {readingCount}</h1>
           <h1>Bookmark Count: {bookmarked.length}</h1>
           {bookmarked.map((marked) => (
-            <p>{marked.title}</p>
+            <p
+              key={marked.id}
+              className="bg-red-400 p-2 shadow m-2 text-white rounded-xl text-xl"
+            >
+              {marked.title}
+            </p>
           ))}
         </div>
       </div>
